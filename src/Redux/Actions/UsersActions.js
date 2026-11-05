@@ -15,7 +15,7 @@ const apiURL = process.env.REACT_APP_API_URL;
 export const getAllUsers = () => async (dispatch) => {
   const token = localStorage.getItem("token");
   try {
-    const res = await axios.get(`${apiURL}/api/analyses`, {
+    const res = await axios.get(`${apiURL}/api/auth/all-users`, {
       headers: { Authorization: token },
     });
     dispatch({
@@ -32,7 +32,7 @@ export const getAllUsers = () => async (dispatch) => {
 
 export const register = (newUser, navigate) => async (dispatch) => {
   try {
-    await axios.post(`${apiURL}/api/analyses`, newUser);
+    await axios.post(`${apiURL}/api/auth/SignUp`, newUser);
     dispatch(getAllUsers());
 
     navigate("/admin-dashboard");
