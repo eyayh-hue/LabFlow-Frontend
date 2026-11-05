@@ -107,7 +107,7 @@ const AdminDashboard = () => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette analyse ?")) {
       try {
         const token = localStorage.getItem("token");
-        await axios.delete(`${apiURL}/api/analyses/delete/${id}`, {
+        await axios.delete(`${apiURL}/api/analyses/admindelete/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAnalyses(analyses.filter((a) => a._id !== id));
