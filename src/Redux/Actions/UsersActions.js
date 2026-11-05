@@ -10,7 +10,7 @@ import {
   FORGOT_PASSWORD_FAIL,
 } from "../ActionsTypes/UsersTypes";
 import axios from "axios";
-const apiURL = process.env.VITE_BACKEND_URL;
+const apiURL = process.env.REACT_APP_API_URL;
 
 export const getAllUsers = () => async (dispatch) => {
   const token = localStorage.getItem("token");

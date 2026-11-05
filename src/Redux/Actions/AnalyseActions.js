@@ -5,7 +5,7 @@ import {
   ADD_ANALYSE_FAIL,
 } from "../ActionsTypes/AnalyseTpes";
 
-const apiURL = process.env.VITE_BACKEND_URL;
+const apiURL = process.env.REACT_APP_API_URL;
 export const addAnalyse = (newAnalyse) => async (dispatch) => {
   dispatch({ type: ADD_ANALYSE_LOADING });
 
