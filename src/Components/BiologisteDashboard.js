@@ -12,6 +12,7 @@ import {
   Pencil,
   Trash2,
 } from "lucide-react";
+const apiURL = process.env.REACT_APP_API_URL;
 
 const BiologisteDashboard = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const BiologisteDashboard = () => {
 
   const fetchBioAnalyses = async () => {
     try {
-      const res = await axios.get("/api/analyses/getAllAnalyseBio", {
+      const res = await axios.get(`${apiURL}/api/analyses/getAllAnalyseBio`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setAnalyses(res.data.analyses);
@@ -49,9 +50,12 @@ const BiologisteDashboard = () => {
 
   const fetchNotifications = async () => {
     try {
-      const res = await axios.get("/api/analyses/biologiste/notifications", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const res = await axios.get(
+        `${apiURL}/api/analyses/biologiste/notifications`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        },
+      );
       setNotifications(res.data.notifications);
     } catch (err) {
       console.error(err);
@@ -60,9 +64,12 @@ const BiologisteDashboard = () => {
 
   const handleDismissNotification = async (id) => {
     try {
-      await axios.delete(`/api/analyses/biologiste/notification/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      await axios.delete(
+        `${apiURL}/api/analyses/biologiste/notification/${id}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        },
+      );
       setNotifications(notifications.filter((n) => n._id !== id));
     } catch (err) {
       console.error(err);
@@ -110,13 +117,13 @@ const BiologisteDashboard = () => {
 
       if (isEdit) {
         await axios.put(
-          `/api/analyses/update/${currentId}`,
+          `${apiURL}/api/analyses/update/${currentId}`,
           analyseData,
           config,
         );
         alert("Analyse modifiée avec succès");
       } else {
-        await axios.post("/api/analyses/add", analyseData, config);
+        await axios.post(`${apiURL}/api/analyses/add`, analyseData, config);
         alert("Analyse enregistrée avec succès");
       }
 
@@ -143,7 +150,7 @@ const BiologisteDashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette analyse ?")) {
       try {
-        await axios.delete(`/api/analyses/delete/${id}`, {
+        await axios.delete(`${apiURL}/api/analyses/delete/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         fetchBioAnalyses();

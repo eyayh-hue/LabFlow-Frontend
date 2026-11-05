@@ -21,6 +21,7 @@ import {
   Eye,
   Ban,
 } from "lucide-react";
+const apiURL = process.env.REACT_APP_API_URL;
 
 const ROLES = ["Patient", "Biologiste", "Admin", "SubAdmin"];
 
@@ -77,7 +78,7 @@ const AdminDashboard = () => {
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
         const resAnalyses = await axios.get(
-          "/api/analyses/admin/getAllAnalyses",
+          `${apiURL}/api/analyses/admin/getAllAnalyses`,
           config,
         );
         setAnalyses(resAnalyses.data.analyses);
@@ -106,7 +107,7 @@ const AdminDashboard = () => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette analyse ?")) {
       try {
         const token = localStorage.getItem("token");
-        await axios.delete(`/api/analyses/delete/${id}`, {
+        await axios.delete(`${apiURL}/api/analyses/delete/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAnalyses(analyses.filter((a) => a._id !== id));
@@ -123,7 +124,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.put(
-        `/api/analyses/admin/update/${currentAnalyse._id}`,
+        `${apiURL}/api/analyses/admin/update/${currentAnalyse._id}`,
         {
           biologiste: selectedBio,
           Statut: selectedStatut,

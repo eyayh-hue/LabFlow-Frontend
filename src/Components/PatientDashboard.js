@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import MedicalReportView from "./MedicalReportView";
 import MedicalReportPDF from "./MedicalReportPDF";
+const apiURL = process.env.REACT_APP_API_URL;
 
 const PatientDashboard = () => {
   const [patientAnalyses, setPatientAnalyses] = useState([]);
@@ -25,7 +26,7 @@ const PatientDashboard = () => {
 
   const fetchPatientAnalyses = async () => {
     try {
-      const res = await axios.get("/api/analyses/getPatientAnalyses", {
+      const res = await axios.get(`${apiURL}/api/analyses/getPatientAnalyses`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
