@@ -1,0 +1,926 @@
+/* ==========================================================
+   LabFlow – thème par-dessus Bootstrap 5
+   À importer APRÈS bootstrap dans src/index.js
+   ========================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap");
+
+/* ---------- 1. Palette (clair) ----------
+   Le 2e sélecteur (zone PDF cachée du patient) force toujours la palette claire,
+   pour que le PDF reste lisible même en mode sombre. */
+:root,
+div[style*="-10000px"] {
+  --lf-bg1: #e6efff;
+  --lf-bg2: #f8faff;
+  --lf-card: #ffffff;
+  --lf-card2: #f1f6ff;
+  --lf-ink: #0b1f44;
+  --lf-soft: #4a5d84;
+  --lf-line: #d5e1fa;
+  --lf-blue: #1d5fd6;
+  --lf-blue2: #0b3c9e;
+  --lf-tint: #dce8ff;
+  --lf-ok: #0f8a5a;
+  --lf-okbg: #dcf5e9;
+  --lf-warn: #8a5a00;
+  --lf-warnbg: #fff1cc;
+  --lf-bad: #c4283f;
+  --lf-badbg: #fde4e8;
+  --lf-pro: #5b34c4;
+  --lf-probg: #ece4ff;
+  --lf-glass: rgba(255, 255, 255, 0.78);
+  --lf-shadow: 0 10px 30px rgba(29, 95, 214, 0.12);
+  --lf-close-filter: none;
+  --lf-toggler-filter: invert(1);
+  --lf-arrow: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%234a5d84' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+
+  --bs-body-color: #0b1f44;
+  --bs-border-color: #d5e1fa;
+  --bs-primary-rgb: 29, 95, 214;
+  --bs-success-rgb: 15, 138, 90;
+  --bs-danger-rgb: 196, 40, 63;
+  --bs-warning-rgb: 232, 163, 23;
+  --bs-info-rgb: 29, 95, 214;
+  --bs-secondary-rgb: 74, 93, 132;
+  color-scheme: light;
+}
+
+/* ---------- 2. Palette (sombre) ----------
+   Automatique selon le système, ou forcée avec <html data-theme="dark"> / "light" */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --lf-bg1: #0a1736; --lf-bg2: #0d2150; --lf-card: #122a5e; --lf-card2: #0f2250;
+    --lf-ink: #e9f1ff; --lf-soft: #a9bde6; --lf-line: #2a4685;
+    --lf-blue: #3b8bff; --lf-blue2: #1d5fd6; --lf-tint: #1b3a7a;
+    --lf-ok: #5be0a8; --lf-okbg: #0f3b30; --lf-warn: #ffd36a; --lf-warnbg: #3d3210;
+    --lf-bad: #ff8a9b; --lf-badbg: #431a2a; --lf-pro: #c3adff; --lf-probg: #33276b;
+    --lf-glass: rgba(18, 42, 94, 0.8); --lf-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    --lf-close-filter: invert(1) grayscale(100%) brightness(200%);
+    --lf-toggler-filter: none;
+    --lf-arrow: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23a9bde6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    --bs-body-color: #e9f1ff; --bs-border-color: #2a4685;
+    --bs-primary-rgb: 59, 139, 255; --bs-success-rgb: 91, 224, 168; --bs-danger-rgb: 255, 138, 155;
+    --bs-info-rgb: 59, 139, 255; --bs-secondary-rgb: 169, 189, 230;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --lf-bg1: #0a1736; --lf-bg2: #0d2150; --lf-card: #122a5e; --lf-card2: #0f2250;
+  --lf-ink: #e9f1ff; --lf-soft: #a9bde6; --lf-line: #2a4685;
+  --lf-blue: #3b8bff; --lf-blue2: #1d5fd6; --lf-tint: #1b3a7a;
+  --lf-ok: #5be0a8; --lf-okbg: #0f3b30; --lf-warn: #ffd36a; --lf-warnbg: #3d3210;
+  --lf-bad: #ff8a9b; --lf-badbg: #431a2a; --lf-pro: #c3adff; --lf-probg: #33276b;
+  --lf-glass: rgba(18, 42, 94, 0.8); --lf-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --lf-close-filter: invert(1) grayscale(100%) brightness(200%);
+  --lf-toggler-filter: none;
+  --lf-arrow: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23a9bde6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  --bs-body-color: #e9f1ff; --bs-border-color: #2a4685;
+  --bs-primary-rgb: 59, 139, 255; --bs-success-rgb: 91, 224, 168; --bs-danger-rgb: 255, 138, 155;
+  --bs-info-rgb: 59, 139, 255; --bs-secondary-rgb: 169, 189, 230;
+  color-scheme: dark;
+}
+
+/* ---------- 3. Base ---------- */
+body {
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  color: var(--lf-ink);
+  background: linear-gradient(160deg, var(--lf-bg1), var(--lf-bg2)) fixed;
+  min-height: 100vh;
+}
+.container { max-width: 1080px; }
+hr { border-color: var(--lf-line); opacity: 1; }
+:focus-visible { outline: 2px solid var(--lf-blue); outline-offset: 2px; }
+h2.fw-bold { color: var(--lf-ink) !important; font-weight: 800 !important; letter-spacing: -0.01em; }
+.text-muted, .text-secondary { color: var(--lf-soft) !important; }
+.text-dark { color: var(--lf-ink) !important; }
+.text-primary { color: var(--lf-blue) !important; }
+.text-success { color: var(--lf-ok) !important; }
+.text-danger { color: var(--lf-bad) !important; }
+
+/* ---------- 4. Navbar (barre flottante en verre) ---------- */
+.navbar {
+  --bs-navbar-color: var(--lf-soft);
+  --bs-navbar-hover-color: var(--lf-blue);
+  --bs-navbar-active-color: var(--lf-blue);
+  --bs-navbar-brand-color: var(--lf-blue);
+  --bs-navbar-brand-hover-color: var(--lf-blue2);
+  width: calc(100% - 32px);
+  max-width: 1080px;
+  margin: 16px auto 0;
+  padding: 10px 16px !important;
+  border: 1px solid var(--lf-line);
+  border-radius: 18px;
+  box-shadow: var(--lf-shadow);
+  backdrop-filter: blur(8px);
+}
+.navbar.bg-dark { background: var(--lf-glass) !important; }
+.navbar .navbar-brand { color: var(--lf-blue); font-weight: 800 !important; font-size: 1.25rem; }
+.navbar .nav-link { color: var(--lf-soft); font-weight: 500; padding: 0.45rem 0.9rem; border-radius: 999px; }
+.navbar .nav-link:hover { color: var(--lf-blue); background: var(--lf-tint); }
+.navbar .nav-link.text-warning,
+.navbar .nav-link.text-success,
+.navbar .nav-link.text-info { color: var(--lf-soft) !important; font-weight: 500 !important; }
+.navbar .nav-link.active,
+.navbar .nav-link[aria-current="page"] { background: var(--lf-tint); color: var(--lf-blue) !important; font-weight: 600 !important; }
+.navbar-toggler { border-color: var(--lf-line); }
+.navbar-toggler-icon { filter: var(--lf-toggler-filter); }
+
+/* ---------- 5. Accueil (Hero Section) ---------- */
+div[style*="margin-top: 50px"] {
+  max-width: 1080px;
+  margin: 26px auto 0 !important;
+  padding: 56px 24px;
+  border-radius: 24px;
+  background: linear-gradient(110deg, var(--lf-blue2), var(--lf-blue));
+  color: #fff;
+  box-shadow: var(--lf-shadow);
+}
+div[style*="margin-top: 50px"] h1 { font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+div[style*="margin-top: 50px"] p { opacity: 0.92; margin: 0; }
+
+.hero-illustration {
+  background: var(--lf-card) !important;
+  border: 1px solid var(--lf-line);
+  box-shadow: var(--lf-shadow);
+}
+
+.feature-card {
+  background: var(--lf-card) !important;
+  border: 1px solid var(--lf-line) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--lf-shadow) !important;
+}
+
+.feature-icon-wrapper {
+  background: var(--lf-tint) !important;
+  color: var(--lf-blue) !important;
+}
+
+.step-number {
+  background: linear-gradient(180deg, var(--lf-blue), var(--lf-blue2)) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(29, 95, 214, 0.3);
+}
+
+/* ---------- 6. Cartes ---------- */
+.card {
+  background: var(--lf-card);
+  color: var(--lf-ink);
+  border: 1px solid var(--lf-line);
+  border-radius: 22px;
+  overflow: hidden;
+}
+.card.shadow, .card.shadow-sm { box-shadow: var(--lf-shadow) !important; }
+.card.border-0 { border: 1px solid var(--lf-line) !important; }
+.card.rounded-3 { border-radius: 22px !important; }
+.card.bg-light, .card .bg-white { background: var(--lf-card) !important; }
+.card-header { border-bottom: 0; padding: 1rem 1.25rem; }
+.card-header.bg-primary { background: linear-gradient(110deg, var(--lf-blue2), var(--lf-blue)) !important; color: #fff; }
+.card-header.bg-secondary { background: var(--lf-tint) !important; color: var(--lf-blue) !important; }
+.card-title { color: var(--lf-ink); }
+.card-text.text-muted strong { color: var(--lf-soft); font-weight: 600; }
+
+/* Profil : lignes "libellé ... valeur" */
+.card.bg-light p.fs-5 {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  margin: 0; padding: 0.8rem 0; font-size: 0.95rem !important;
+}
+.card.bg-light p.fs-5 strong { color: var(--lf-soft); font-weight: 500; }
+.card.bg-light hr { margin: 0; }
+
+/* ---------- 7. Onglets (nav-pills) ---------- */
+.nav-pills {
+  display: inline-flex !important;
+  gap: 0.25rem !important;
+  padding: 4px;
+  background: var(--lf-card);
+  border: 1px solid var(--lf-line);
+  border-radius: 999px;
+}
+.nav-pills .nav-link { border-radius: 999px; font-size: 0.9rem; }
+.nav-pills .nav-link.bg-light { background: transparent !important; color: var(--lf-soft) !important; }
+.nav-pills .nav-link.active,
+.nav-pills .nav-link.active.bg-primary {
+  background: linear-gradient(180deg, var(--lf-blue), var(--lf-blue2)) !important;
+  color: #fff !important;
+}
+
+/* ---------- 8. Boutons ---------- */
+.btn { border-radius: 999px; font-weight: 600; padding: 0.55rem 1.2rem; border-width: 1px; }
+.btn-sm { padding: 0.3rem 0.8rem; font-size: 0.82rem; }
+
+/* Actions principales : bleu */
+.btn.btn-primary, .btn.btn-success {
+  background: linear-gradient(180deg, var(--lf-blue), var(--lf-blue2));
+  border-color: transparent; color: #fff;
+  box-shadow: 0 6px 16px rgba(29, 95, 214, 0.28);
+}
+.btn.btn-primary:hover, .btn.btn-primary:active, .btn.btn-primary:focus-visible,
+.btn.btn-success:hover, .btn.btn-success:active, .btn.btn-success:focus-visible {
+  background: linear-gradient(180deg, var(--lf-blue), var(--lf-blue2));
+  border-color: transparent; color: #fff; filter: brightness(1.1);
+}
+
+/* "Modifier" : bouton doux */
+.btn.btn-warning, .btn.btn-info {
+  background: var(--lf-tint); border-color: transparent; color: var(--lf-blue) !important;
+}
+.btn.btn-warning:hover, .btn.btn-warning:active, .btn.btn-warning:focus-visible,
+.btn.btn-info:hover, .btn.btn-info:active, .btn.btn-info:focus-visible {
+  background: var(--lf-blue); border-color: transparent; color: #fff !important;
+}
+.btn.btn-warning.w-100, .modal-footer .btn.btn-warning {
+  background: linear-gradient(180deg, var(--lf-blue), var(--lf-blue2));
+  color: #fff !important; box-shadow: 0 6px 16px rgba(29, 95, 214, 0.28);
+}
+.btn.btn-warning.w-100:hover, .modal-footer .btn.btn-warning:hover { filter: brightness(1.1); }
+
+/* "Supprimer" : rouge doux */
+.btn.btn-danger {
+  background: var(--lf-badbg); border-color: transparent; color: var(--lf-bad) !important;
+}
+.btn.btn-danger:hover, .btn.btn-danger:active, .btn.btn-danger:focus-visible {
+  background: var(--lf-bad); border-color: transparent; color: #fff !important;
+}
+
+/* Annuler / secondaire */
+.btn.btn-secondary {
+  background: transparent; border-color: var(--lf-line); color: var(--lf-soft);
+}
+.btn.btn-secondary:hover, .btn.btn-secondary:active {
+  background: var(--lf-tint); border-color: var(--lf-line); color: var(--lf-blue);
+}
+
+/* Variantes outline */
+.btn.btn-outline-primary, .btn.btn-outline-warning {
+  background: transparent; border-color: var(--lf-blue); color: var(--lf-blue);
+}
+.btn.btn-outline-primary:hover, .btn.btn-outline-warning:hover { background: var(--lf-tint); border-color: var(--lf-blue); color: var(--lf-blue); }
+.btn.btn-outline-danger { background: transparent; border-color: var(--lf-bad); color: var(--lf-bad); }
+.btn.btn-outline-danger:hover { background: var(--lf-badbg); border-color: var(--lf-bad); color: var(--lf-bad); }
+.btn.btn-outline-secondary { background: var(--lf-card2); border-color: var(--lf-line); color: var(--lf-soft); }
+.btn.btn-outline-secondary:hover { background: var(--lf-tint); border-color: var(--lf-line); color: var(--lf-blue); }
+
+/* Bouton clair dans l'en-tête bleu (Télécharger PDF) */
+.card-header .btn.btn-light {
+  background: #fff; border-color: transparent; color: #0b3c9e !important; box-shadow: none;
+}
+
+/* Champ mot de passe + bouton Voir/Cacher */
+.input-group > .form-control { border-radius: 12px 0 0 12px; }
+.input-group > .btn { border-radius: 0 12px 12px 0; }
+
+/* ---------- 9. Formulaires ---------- */
+.form-label { font-weight: 600; font-size: 0.85rem; color: var(--lf-ink); }
+.form-control, .form-select {
+  background-color: var(--lf-card2); color: var(--lf-ink);
+  border: 1px solid var(--lf-line); border-radius: 12px; padding: 0.65rem 0.9rem;
+}
+.form-select { background-image: var(--lf-arrow); }
+.form-control::placeholder { color: var(--lf-soft); opacity: 0.75; }
+.form-control:focus, .form-select:focus {
+  background-color: var(--lf-card2); color: var(--lf-ink);
+  border-color: var(--lf-blue); box-shadow: 0 0 0 3px rgba(59, 139, 255, 0.2);
+}
+
+/* ---------- 10. Tableaux ---------- */
+.table {
+  --bs-table-bg: transparent; --bs-table-color: var(--lf-ink);
+  --bs-table-striped-bg: transparent; --bs-table-striped-color: var(--lf-ink);
+  --bs-table-hover-bg: var(--lf-card2); --bs-table-border-color: var(--lf-line);
+  color: var(--lf-ink); border-color: var(--lf-line);
+}
+.table > :not(caption) > * > * {
+  background-color: transparent; color: var(--lf-ink);
+  border-bottom-color: var(--lf-line); box-shadow: none; padding: 0.8rem 0.7rem;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * { --bs-table-bg-type: transparent; --bs-table-accent-bg: transparent; }
+.table thead th, .table-light th {
+  background: var(--lf-card2) !important; color: var(--lf-soft) !important;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; white-space: nowrap;
+}
+.table-bordered > :not(caption) > * { border-color: var(--lf-line); }
+.table tbody tr:hover > * { background-color: var(--lf-card2); }
+
+/* ---------- 11. Badges (statuts et rôles) ---------- */
+.badge { border-radius: 999px; font-weight: 600; padding: 0.4em 0.9em; }
+.badge.bg-success { background: var(--lf-okbg) !important; color: var(--lf-ok) !important; }
+.badge.bg-warning { background: var(--lf-warnbg) !important; color: var(--lf-warn) !important; }
+.badge.bg-secondary, .badge.bg-info { background: var(--lf-tint) !important; color: var(--lf-blue) !important; }
+.badge.bg-danger { background: var(--lf-probg) !important; color: var(--lf-pro) !important; }
+
+/* ---------- 12. Alertes ---------- */
+.alert { border: 0; border-radius: 14px; }
+.alert.alert-danger { background: var(--lf-badbg); color: var(--lf-bad); }
+.alert.alert-info { background: var(--lf-tint); color: var(--lf-blue); }
+.alert.alert-warning { background: var(--lf-warnbg); color: var(--lf-warn); }
+.alert.alert-success { background: var(--lf-okbg); color: var(--lf-ok); }
+.alert .text-dark, .alert .text-muted { color: inherit !important; }
+
+/* ---------- 13. Fenêtres modales ---------- */
+.modal-content {
+  background: var(--lf-card); color: var(--lf-ink);
+  border: 1px solid var(--lf-line); border-radius: 22px; overflow: hidden;
+}
+.modal-header.bg-warning, .modal-header.bg-success, .modal-header.bg-info {
+  background: transparent !important; color: var(--lf-ink) !important;
+}
+.modal-header, .modal-footer { border-color: var(--lf-line); }
+.modal-header .btn-close { filter: var(--lf-close-filter); opacity: 0.8; }
+.modal-backdrop.show { background: #061028; opacity: 0.55; }
+
+/* ---------- 14. Accessibilité ---------- */
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* ---------- 15. Icônes (lucide-react) et champs de recherche ---------- */
+.btn svg, .nav-link svg, .badge svg, .alert svg { flex: none; }
+.input-group > .input-group-text {
+  background: var(--lf-card2); color: var(--lf-soft);
+  border: 1px solid var(--lf-line); border-right: 0; border-radius: 12px 0 0 12px;
+}
+.input-group > .input-group-text + .form-control { border-radius: 0 12px 12px 0; border-left: 0; }
+.input-group:focus-within > .input-group-text { border-color: var(--lf-blue); }
+.modal-header small.text-muted { color: var(--lf-soft) !important; }
+
+/* ==========================================================
+   16. LABFLOW LOGIN PAGE - SPLIT SCREEN
+   ========================================================== */
+
+/* Main container */
+
+.login-page {
+  width: 100%;
+  max-width: 1024px !important;
+  min-height: 100vh;
+  margin: 0 auto !important;
+  padding: 30px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+/* Force light theme for Login only */
+
+.login-page {
+  --login-bg: #ffffff;
+  --login-left: #e1ebff;
+  --login-input: #f1f6ff;
+  --login-ink: #0b1f44;
+  --login-soft: #4a5d84;
+  --login-line: #d5e1fa;
+  --login-blue: #1d5fd6;
+  --login-blue-dark: #0b3c9e;
+}
+
+/* Main card */
+
+.login-card {
+  width: 100%;
+  border: 1px solid var(--login-line) !important;
+  border-radius: 28px !important;
+  overflow: hidden;
+  background: var(--login-bg) !important;
+  box-shadow: 0 15px 40px rgba(29, 95, 214, 0.13) !important;
+}
+
+/* Remove Bootstrap row spacing */
+
+.login-row {
+  margin: 0 !important;
+  min-height: 530px;
+}
+
+/* ==========================================================
+   LEFT SIDE
+   ========================================================== */
+
+.login-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 40px !important;
+  background: linear-gradient(
+    145deg,
+    #e3edff,
+    #dce8ff
+  ) !important;
+  border-right: 1px solid var(--login-line);
+}
+
+/* Brand */
+
+.login-brand {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1d5fd6;
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.login-brand svg {
+  color: #1d5fd6;
+}
+
+/* Laboratory illustration */
+
+.login-lab-illustration {
+  position: relative;
+  width: 100%;
+  max-width: 390px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main flask */
+
+.login-main-flask {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1d5fd6;
+}
+
+.login-main-flask svg {
+  width: 220px;
+  height: 220px;
+}
+
+.login-flask-liquid {
+  position: absolute;
+  width: 125px;
+  height: 53px;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(29, 95, 214, 0.65);
+  border-radius: 5px 5px 45px 45px;
+  z-index: -1;
+}
+
+/* Test tubes */
+
+.login-tube {
+  position: absolute;
+  width: 34px;
+  height: 112px;
+  border: 5px solid #1d5fd6;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.5);
+  bottom: 25px;
+  overflow: hidden;
+}
+
+.login-tube span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 55%;
+  background: #4d82e1;
+  border-radius: 12px;
+}
+
+.login-tube.tube-1 {
+  left: 12px;
+}
+
+.login-tube.tube-2 {
+  left: 54px;
+  height: 125px;
+}
+
+.login-tube.tube-3 {
+  right: 54px;
+  height: 100px;
+}
+
+.login-tube.tube-4 {
+  right: 12px;
+  height: 112px;
+}
+
+/* Left footer */
+
+.login-left-footer {
+  width: 100%;
+  text-align: center;
+}
+
+.login-left-footer h3 {
+  color: #0b1f44;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.login-left-footer p {
+  color: #4a5d84;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* ==========================================================
+   RIGHT SIDE
+   ========================================================== */
+
+.login-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 45px 36px !important;
+  background: #ffffff !important;
+}
+
+.login-form-wrapper {
+  width: 100%;
+  max-width: 440px;
+}
+
+/* Heading */
+
+.login-heading {
+  margin-bottom: 25px;
+}
+
+.login-heading h1 {
+  color: #0b1f44;
+  font-size: 29px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.7px;
+}
+
+.login-heading p {
+  color: #4a5d84;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ==========================================================
+   INPUTS
+   ========================================================== */
+
+.login-input-group {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 15px;
+  margin-bottom: 12px;
+  background: #f1f6ff;
+  border: 1px solid #d5e1fa;
+  border-radius: 13px;
+  transition: all 0.2s ease;
+}
+
+.login-input-group:focus-within {
+  border-color: #1d5fd6;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(29, 95, 214, 0.1);
+}
+
+.login-input-group > svg {
+  flex-shrink: 0;
+  color: #1d5fd6;
+}
+
+.login-input-group input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #0b1f44;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.login-input-group input::placeholder {
+  color: #7585a3;
+  opacity: 1;
+}
+
+.login-eye {
+  border: none;
+  background: transparent;
+  color: #52698f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.login-eye:hover {
+  color: #1d5fd6;
+}
+
+/* ==========================================================
+   REMEMBER ME + FORGOT PASSWORD
+   ========================================================== */
+
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 20px 0 24px;
+}
+
+.login-options label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: #0b1f44;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.login-options input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: #1d5fd6;
+  cursor: pointer;
+}
+
+.login-options a {
+  color: #1d5fd6;
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.login-options a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================
+   LOGIN BUTTON
+   ========================================================== */
+
+.login-submit {
+  width: 100%;
+  height: 49px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(
+    180deg,
+    #2165df,
+    #0b3c9e
+  );
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 7px 17px rgba(29, 95, 214, 0.28);
+  transition: all 0.25s ease;
+}
+
+.login-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(29, 95, 214, 0.35);
+  filter: brightness(1.08);
+}
+
+.login-submit:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================
+   DIVIDER
+   ========================================================== */
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 23px 0;
+}
+
+.login-divider span {
+  flex: 1;
+  height: 1px;
+  background: #d5e1fa;
+}
+
+.login-divider p {
+  margin: 0;
+  color: #7585a3;
+  font-size: 12px;
+}
+
+/* ==========================================================
+   SECURITY
+   ========================================================== */
+
+.login-security {
+  width: 100%;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid #d5e1fa;
+  border-radius: 13px;
+  background: #f1f6ff;
+  color: #1d5fd6;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Error message */
+
+.login-page .alert-danger {
+  padding: 12px 15px;
+  margin-bottom: 17px;
+  background: #fde4e8;
+  color: #c4283f;
+  border-radius: 12px;
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 991px) {
+  .login-page {
+    max-width: 650px !important;
+  }
+
+  .login-row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login-left {
+    min-height: 290px;
+    padding: 22px 25px !important;
+  }
+
+  .login-lab-illustration {
+    height: 145px;
+    transform: scale(0.75);
+    margin: -5px 0;
+  }
+
+  .login-right {
+    padding: 35px 25px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: 12px !important;
+  }
+
+  .login-card {
+    border-radius: 20px !important;
+  }
+
+  .login-left {
+    min-height: 260px;
+  }
+
+  .login-heading h1 {
+    font-size: 25px;
+  }
+
+  .login-options {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .login-right {
+    padding: 30px 20px !important;
+  }
+}
+.forgot-password-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f6f9;
+  font-family: 'Cairo', sans-serif;
+}
+
+.forgot-password-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 420px;
+  text-align: left;
+  direction: ltr;
+}
+
+.forgot-password-card h2 {
+  color: #1e293b;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.forgot-password-card p {
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #334155;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #3b82f6;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #2563eb;
+}
+
+.submit-btn:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.alert-success {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.alert-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.back-to-login {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.back-to-login a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.back-to-login a:hover {
+  text-decoration: underline;
+}
