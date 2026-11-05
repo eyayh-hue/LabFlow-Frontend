@@ -5,6 +5,7 @@ import {
   ADD_ANALYSE_FAIL,
 } from "../ActionsTypes/AnalyseTpes";
 
+const apiURL = process.env.VITE_BACKEND_URL;
 export const addAnalyse = (newAnalyse) => async (dispatch) => {
   dispatch({ type: ADD_ANALYSE_LOADING });
 
@@ -17,11 +18,7 @@ export const addAnalyse = (newAnalyse) => async (dispatch) => {
       },
     };
 
-    const res = await axios.post(
-      "http://localhost:5000/api/analyses/add",
-      newAnalyse,
-      config,
-    );
+    const res = await axios.post(`${apiURL}/api/analyses`, newAnalyse, config);
     dispatch({
       type: ADD_ANALYSE_SUCCESS,
       payload: res.data,

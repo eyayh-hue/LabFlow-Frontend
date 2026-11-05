@@ -10,11 +10,12 @@ import {
   FORGOT_PASSWORD_FAIL,
 } from "../ActionsTypes/UsersTypes";
 import axios from "axios";
+const apiURL = process.env.VITE_BACKEND_URL;
 
 export const getAllUsers = () => async (dispatch) => {
   const token = localStorage.getItem("token");
   try {
-    const res = await axios.get("/api/auth/all-users", {
+    const res = await axios.get(`${apiURL}/api/analyses`, {
       headers: { Authorization: token },
     });
     dispatch({
@@ -31,7 +32,7 @@ export const getAllUsers = () => async (dispatch) => {
 
 export const register = (newUser, navigate) => async (dispatch) => {
   try {
-    await axios.post("/api/auth/SignUp", newUser);
+    await axios.post(`${apiURL}/api/analyses`, newUser);
     dispatch(getAllUsers());
 
     navigate("/admin-dashboard");
@@ -49,7 +50,7 @@ export const register = (newUser, navigate) => async (dispatch) => {
 
 export const login = (userCredential, navigate) => async (dispatch) => {
   try {
-    const res = await axios.post("/api/auth/SignIn", userCredential);
+    const res = await axios.post(`${apiURL}/api/auth/SignIn`, userCredential);
 
     localStorage.setItem("token", res.data.token);
 
@@ -74,7 +75,7 @@ export const currentUser = () => async (dispatch) => {
         Authorization: localStorage.getItem("token"),
       },
     };
-    const res = await axios.get("/api/auth/current", config);
+    const res = await axios.get(`${apiURL}/api/auth/current`, config);
     dispatch({
       type: CURRENT_USER,
       payload: res.data,
@@ -94,7 +95,7 @@ export const updateProfile = (updatedData) => async (dispatch) => {
         Authorization: localStorage.getItem("token"),
       },
     };
-    await axios.put("/api/auth/update", updatedData, config);
+    await axios.put(`${apiURL}/api/auth/update`, updatedData, config);
 
     alert("Profile updated successfully!");
 
@@ -121,7 +122,7 @@ export const deleteAccount = (navigate) => async (dispatch) => {
         Authorization: localStorage.getItem("token"),
       },
     };
-    await axios.delete("/api/auth/delete", config);
+    await axios.delete(`${apiURL}/api/auth/delete`, config);
 
     localStorage.removeItem("token");
     dispatch({ type: LOGOUT });
@@ -135,7 +136,7 @@ export const deleteAccount = (navigate) => async (dispatch) => {
 export const deleteUser = (id) => async (dispatch) => {
   const token = localStorage.getItem("token");
   try {
-    await axios.delete(`/api/auth/delete-user/${id}`, {
+    await axios.delete(`${apiURL}/api/auth/delete-user/${id}`, {
       headers: { Authorization: token },
     });
     dispatch(getAllUsers());
@@ -148,7 +149,7 @@ export const deleteUser = (id) => async (dispatch) => {
 export const updateUser = (id, updatedData) => async (dispatch) => {
   const token = localStorage.getItem("token");
   try {
-    await axios.put(`/api/auth/update-user/${id}`, updatedData, {
+    await axios.put(`${apiURL}/api/auth/update-user/${id}`, updatedData, {
       headers: { Authorization: token },
     });
     dispatch(getAllUsers());
@@ -165,7 +166,7 @@ export const createUserByAdmin =
   (userData, handleCloseModal) => async (dispatch) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.post("/api/auth/create-user", userData, {
+      const res = await axios.post(`${apiURL}/api/auth/create-user`, userData, {
         headers: { Authorization: token },
       });
       alert(res.data.msg || "Utilisateur créé avec succès");
@@ -186,7 +187,9 @@ export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
 
-    const { data } = await axios.post("/api/auth/forgot-password", { email });
+    const { data } = await axios.post(`${apiURL}/api/auth/forgot-password`, {
+      email,
+    });
 
     dispatch({
       type: FORGOT_PASSWORD_SUCCESS,
